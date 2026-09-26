@@ -1,25 +1,23 @@
-# Car Care Feedback Dashboard v3.0
+# Car Care Feedback Intelligence v3.5
 
-Secure manager edition. Adds Supabase Auth login/sign-out, RLS setup, and approval audit logging.
+Adds secure Admin user invitations to the existing v3.3 dashboard.
 
-Approval writes:
-- `Approved = true`
-- `Approved At = current timestamp`
-- `Approved By = signed-in manager email` (falls back to Auth user UUID)
+## New in v3.5
+- Admin-only **Add User** action in User Management.
+- Server-only Next.js route at `/api/admin/users`.
+- The route validates the caller's Supabase access token and verifies `profiles.role = admin` before using the Supabase Admin API.
+- New users receive a Supabase email invitation and get a `profiles` row with the selected Staff, Manager, or Admin role.
+- `SUPABASE_SERVICE_ROLE_KEY` is read only on the server and is never exposed through a `NEXT_PUBLIC_` variable.
 
-## Setup
-1. Copy the working `.env.local` from v2.6 into this folder.
-2. Run `npm.cmd install`.
-3. In Supabase: Authentication > Users > Add user. Create each manager with email/password.
-4. In Supabase: SQL Editor. Open `supabase-rls.sql`, paste it, and Run.
-5. Run `npm.cmd run dev` and open http://localhost:3000.
-6. Sign in with the manager account created in Supabase.
+## Required environment variables
+- `NEXT_PUBLIC_SUPABASE_URL`
+- `NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY`
+- `NEXT_PUBLIC_SUPABASE_TABLE=Feedback_log`
+- `SUPABASE_SERVICE_ROLE_KEY` (server only; never commit it)
 
-Keep the publishable key in `.env.local`. Never use a secret/service-role key in this browser app.
-
-## v3.3 role-aware UI
-This version reads the signed-in user's row from `public.profiles` and displays the assigned role. Only `manager` and `admin` roles are shown approval controls. `staff` can review the dashboard and Attention queue but cannot approve from the UI. Database RLS should still be tightened separately after this version is tested.
+## Supabase note
+For invitation links to land on the correct production site, configure your Supabase Authentication URL settings for your Vercel production URL before relying on invitations for real staff onboarding.
 
 
-## v3.3 Admin Activity
-Admins now have an Admin Activity screen that reads the protected `admin_activity_log` table and shows administrator, affected user, old/new roles, and timestamp with search and refresh controls.
+## v3.5
+Invited users are redirected to `?setup=password` and must create their own password before entering the dashboard. The password is saved through Supabase Auth with `updateUser` and is never stored in `profiles`.
