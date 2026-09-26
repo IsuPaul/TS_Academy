@@ -16,3 +16,6 @@ Approval writes:
 6. Sign in with the manager account created in Supabase.
 
 Keep the publishable key in `.env.local`. Never use a secret/service-role key in this browser app.
+
+## v3.1 role-aware UI
+This version reads the signed-in user's row from `public.profiles` and displays the assigned role. Only `manager` and `admin` roles are shown approval controls. `staff` can review the dashboard and Attention queue but cannot approve from the UI. Database RLS should still be tightened separately after this version is tested.
