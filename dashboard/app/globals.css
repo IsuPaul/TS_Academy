@@ -15,3 +15,103 @@ nav a,button,.select select,.clickable,tbody tr,.vehicleCard{cursor:pointer}nav 
 
 /* v3.4 secure admin user invitations */
 .adminHeaderActions{display:flex;align-items:center;gap:9px}.addUserButton{display:flex;align-items:center;gap:7px;cursor:pointer;padding:9px 13px}.addUserOverlay{z-index:80;align-items:center;justify-content:center}.addUserModal{position:relative;width:min(520px,calc(100vw - 32px));background:#fff;border-radius:20px;padding:28px;box-shadow:0 24px 70px rgba(16,24,40,.22);display:flex;flex-direction:column;gap:15px}.addUserModal h2{margin:0;font-size:24px;color:#101828}.modalIntro{margin:-6px 0 4px;color:#667085;font-size:13px;line-height:1.6}.addUserModal label>span{display:block;margin-bottom:7px;font-size:12px;font-weight:800;color:#344054}.modalRoleSelect{width:100%;border:1px solid #d0d5dd;background:#fff;border-radius:11px;padding:12px 13px;font:inherit;font-size:14px;color:#344054;cursor:pointer}.modalRoleHelp{display:flex;gap:9px;align-items:flex-start;padding:11px 13px;border-radius:11px;background:#f7faff;color:#475467;font-size:12px;line-height:1.5}.modalRoleHelp svg{width:17px;min-width:17px;color:#3267d6}.modalActions{display:flex;justify-content:flex-end;gap:9px;margin-top:4px}.modalActions button{cursor:pointer}.successMessage{display:flex;align-items:center;gap:8px;padding:10px 12px;border:1px solid #cdebd9;background:#edf9f2;color:#246b45;border-radius:11px;font-size:13px;font-weight:700}.successMessage svg{width:18px}.addUserModal .authNote{text-align:left;margin-top:0}
+
+/* v3.6 responsive-only layout update */
+.mobileMenuButton,.mobileMenuClose,.mobileNavBackdrop{display:none}
+
+/* Small desktop / tablet: keep the compact rail but prevent header content collisions. */
+@media (max-width:1200px){
+  .content{padding-left:24px;padding-right:24px}
+  header{flex-wrap:wrap;gap:18px}
+  header>div:first-child{flex:1 1 420px;min-width:0}
+  .headerActions{flex:0 1 auto;flex-wrap:wrap;justify-content:flex-end}
+  .panelTitle{gap:12px;flex-wrap:wrap}
+  .adminHeaderActions{flex-wrap:wrap}
+  .filters>*{min-width:0}
+}
+
+@media (min-width:721px) and (max-width:1050px){
+  aside{overflow-y:auto;overflow-x:hidden}
+  .content{min-width:0}
+  header>div:first-child{flex-basis:100%}
+  .headerActions{width:100%;justify-content:flex-start}
+  .filters{display:grid;grid-template-columns:minmax(220px,1fr) repeat(2,minmax(135px,auto));align-items:center}
+  .filters .search{grid-column:1/-1;min-width:0;width:100%}
+  .cards{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .grid{grid-template-columns:1fr}
+  .panel,.card{min-width:0}
+}
+
+/* Phone navigation becomes an off-canvas drawer instead of disappearing. */
+@media (max-width:720px){
+  body{overflow-x:hidden}
+  main{display:block;min-width:0}
+  aside{display:flex;width:min(286px,84vw);padding:24px 18px;z-index:120;transform:translateX(-105%);transition:transform .22s ease;box-shadow:18px 0 50px rgba(16,24,40,.22);overflow-y:auto}
+  aside.mobileOpen{transform:translateX(0)}
+  aside nav a{font-size:14px;justify-content:flex-start}
+  aside .brand{padding-right:38px}
+  aside .brand>div:not(.logo){display:block}
+  aside .sideFoot div{display:block}
+  .mobileMenuButton{display:grid;place-items:center;position:fixed;left:14px;top:14px;z-index:70;width:42px;height:42px;border:1px solid #e4e7ec;border-radius:11px;background:#fff;color:#344054;box-shadow:0 4px 14px rgba(16,24,40,.1);cursor:pointer}
+  .mobileMenuButton svg,.mobileMenuClose svg{width:20px;height:20px}
+  .mobileMenuClose{display:grid;place-items:center;position:absolute;right:14px;top:14px;width:36px;height:36px;border:1px solid #344054;border-radius:9px;background:#1d2939;color:#fff;cursor:pointer}
+  .mobileNavBackdrop{display:block;position:fixed;inset:0;z-index:110;border:0;background:rgba(16,24,40,.48);padding:0;cursor:pointer}
+  .content{margin:0;width:100%;min-width:0;padding:72px 14px 32px}
+  header{display:flex;flex-direction:column;align-items:stretch;gap:16px;margin-bottom:20px}
+  header>div:first-child{width:100%;min-width:0}
+  h1{font-size:25px;line-height:1.15;overflow-wrap:anywhere}
+  header p:not(.eyebrow){font-size:13px;line-height:1.5}
+  .headerActions{width:100%;display:flex;flex-wrap:wrap;justify-content:flex-start;gap:8px}
+  .headerActions .icon{display:flex}
+  .headerActions .userChip{display:flex;order:5;max-width:none;flex:1 1 190px}
+  .headerActions .signOut{font-size:0;width:40px;padding:0;justify-content:center}
+  .live{white-space:nowrap}
+  .filters{display:grid;grid-template-columns:1fr 1fr;gap:8px;width:100%}
+  .filters .search{grid-column:1/-1;min-width:0;width:100%}
+  .filters .select,.filters .clear,.filters .export,.filters .secondary{width:100%;min-width:0;justify-content:center}
+  .filters .select select{width:100%;max-width:none;min-width:0}
+  .cards{grid-template-columns:1fr 1fr;gap:10px}
+  .card{padding:15px;min-width:0}
+  .card h2{font-size:23px}
+  .cardIcon{position:static;margin-bottom:12px}
+  .grid,.attentionGrid,.vehicleGrid{grid-template-columns:1fr}
+  .panel{padding:15px;min-width:0;overflow:hidden}
+  .tablePanel{padding:0}
+  .tablePanel .panelTitle{padding:16px 15px 0}
+  .panelTitle{align-items:flex-start;flex-direction:column;gap:10px}
+  .panelTitle>div:last-child,.panelTitle>.tiny{width:100%}
+  .adminHeaderActions{width:100%;display:grid;grid-template-columns:1fr 1fr}
+  .adminHeaderActions button{justify-content:center;min-width:0}
+  .tableWrap{width:100%;overflow-x:auto;-webkit-overflow-scrolling:touch}
+  table{min-width:760px}
+  .pagination{gap:10px;padding:12px 14px;flex-wrap:wrap}
+  .pagination>div{margin-left:auto}
+  .chartBox{height:220px;min-width:0}
+  .managerFacts{grid-template-columns:1fr}
+  .attentionCard{padding:16px;min-width:0}
+  .attentionTop{flex-direction:column;gap:8px}
+  .attentionActions{flex-direction:column}
+  .attentionActions button{width:100%;justify-content:center}
+  .historyList button{grid-template-columns:22px minmax(0,1fr) auto;padding:13px 2px;gap:8px}
+  .drawer{width:100vw;max-width:100%;padding:26px 18px}
+  .details{grid-template-columns:1fr}
+  .activitySearch{max-width:none;width:100%}
+  .adminNotice{padding:12px}
+  .roleChange{white-space:normal;flex-wrap:wrap}
+  .addUserModal{width:calc(100vw - 24px);max-height:calc(100vh - 24px);overflow-y:auto;padding:22px 18px}
+  .modalActions{flex-direction:column-reverse}
+  .modalActions button{width:100%;justify-content:center}
+  .authShell{padding:88px 14px 24px}
+  .authBrand{left:18px;top:20px}
+  .authCard{padding:24px 18px;border-radius:16px}
+}
+
+@media (max-width:430px){
+  .cards{grid-template-columns:1fr}
+  .filters{grid-template-columns:1fr}
+  .filters .search{grid-column:1}
+  .headerActions .userChip{flex-basis:100%;order:6}
+  .adminHeaderActions{grid-template-columns:1fr}
+  .pagination{align-items:flex-start;flex-direction:column}
+  .pagination>div{margin-left:0}
+}
