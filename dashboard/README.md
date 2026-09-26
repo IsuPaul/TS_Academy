@@ -17,5 +17,9 @@ Approval writes:
 
 Keep the publishable key in `.env.local`. Never use a secret/service-role key in this browser app.
 
-## v3.2 role-aware UI
+## v3.3 role-aware UI
 This version reads the signed-in user's row from `public.profiles` and displays the assigned role. Only `manager` and `admin` roles are shown approval controls. `staff` can review the dashboard and Attention queue but cannot approve from the UI. Database RLS should still be tightened separately after this version is tested.
+
+
+## v3.3 Admin Activity
+Admins now have an Admin Activity screen that reads the protected `admin_activity_log` table and shows administrator, affected user, old/new roles, and timestamp with search and refresh controls.
