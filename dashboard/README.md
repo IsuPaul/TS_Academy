@@ -55,3 +55,9 @@ Invited users are redirected to `?setup=password` and must create their own pass
 
 ## v3.12
 Admin invitation authorization now verifies the signed-in user against their own RLS-protected `profiles` row before creating the privileged service client. No dashboard functionality was changed.
+
+## v3.13 — Former employee access state
+- Adds `Left` to Admin User Management role choices.
+- Users whose profile role is `left` are shown an Access deactivated screen and cannot enter the dashboard.
+- Left role changes remain visible in Admin Activity and can be restored by an Admin.
+- No other dashboard functionality is changed.
