@@ -44,9 +44,29 @@ export async function POST(request) {
     const caller = await verifyUser(url, publishableKey, token)
     if (!caller?.id) return NextResponse.json({ error: 'Your session is invalid or has expired.' }, { status: 401 })
 
+    // Authorize the caller with their own verified session rather than the
+    // privileged service client. The profiles RLS policy permits a user to
+    // read only their own profile, so this check stays tied to caller.id.
+    const userClient = createClient(url, publishableKey, {
+      global: { headers: { Authorization: `Bearer ${token}` } },
+      auth: { autoRefreshToken: false, persistSession: false },
+    })
+    const { data: profile, error: profileError } = await userClient
+      .from('profiles')
+      .select('role')
+      .eq('id', caller.id)
+      .single()
+
+    if (profileError) {
+      return NextResponse.json({ error: 'Unable to verify your administrator profile.' }, { status: 403 })
+    }
+    if (String(profile?.role || '').trim().toLowerCase() !== 'admin') {
+      return NextResponse.json({ error: 'Administrator access required.' }, { status: 403 })
+    }
+
+    // Create the privileged client only after the caller has been authenticated
+    // and authorized as an administrator.
     const admin = adminClient(url, secret)
-    const { data: profile, error: profileError } = await admin.from('profiles').select('role').eq('id', caller.id).single()
-    if (profileError || profile?.role !== 'admin') return NextResponse.json({ error: 'Administrator access required.' }, { status: 403 })
 
     const redirectUrl = new URL('/', request.url)
     redirectUrl.searchParams.set('setup', 'password')

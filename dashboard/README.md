@@ -46,8 +46,12 @@ Invited users are redirected to `?setup=password` and must create their own pass
 - Phone drawer restores the full navigation labels.
 - No application/business logic changed.
 
-## v3.11 invitation-session safety fix
+## v3.12 invitation-session safety fix
 - Preserves the v3.9 responsive production baseline.
 - Includes the server-side invitation authentication fix.
 - Password setup is shown only when the active authenticated email matches the invited email encoded by the server in the invitation redirect.
 - If another account is already signed in, password setup is blocked and the user is instructed to sign out and reopen the original invitation link.
+
+
+## v3.12
+Admin invitation authorization now verifies the signed-in user against their own RLS-protected `profiles` row before creating the privileged service client. No dashboard functionality was changed.
